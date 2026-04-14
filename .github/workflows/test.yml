@@ -1,0 +1,24 @@
+name: Testing
+
+on: push                                         # запускается на любом пуше
+
+jobs:                                            # набор шагов, которые выполняются на одной виртуальной машине
+  build:
+    runs-on: ubuntu-latest                       # тип виртуальной машины
+    steps:                                       # начало списка шагов, которые будут выполняться по порядку
+      - uses: actions/checkout@v4                # клонирование репозитория
+
+      - name: Install Python                     # устанавливается питон
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+
+      - name: Install dependencies
+
+        run: |
+          python -m pip install --upgrade pip
+          pip install pytest
+          pip install hypothesis
+
+      - name: Run tests
+        run: PYTHONPATH=.:$PYTHONPATH pytest -v
