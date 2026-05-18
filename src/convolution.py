@@ -26,45 +26,41 @@ class ImageConvolution:
 
         height, width = self.image.shape
 
-        padded = np.zeros(
-            (height + 2 * padding_height, width + 2 * padding_width)
-        )
+        padded = np.zeros((height + 2 * padding_height, width + 2 * padding_width))
 
         padded[
-            padding_height: padding_height + height,
-            padding_width: padding_width + width,
+            padding_height : padding_height + height,
+            padding_width : padding_width + width,
         ] = self.image
 
         if self.mode == "zero":
             pass
 
         if self.mode == "edge":
-            padded[:padding_height, padding_width: padding_width + width] = (
-                self.image[0, :]
+            padded[:padding_height, padding_width : padding_width + width] = self.image[
+                0, :
+            ]
+            padded[: padding_height + height, padding_width : padding_width + width] = (
+                self.image[-1, :]
             )
-            padded[
-                : padding_height + height, padding_width: padding_width + width
-            ] = self.image[-1, :]
 
             for i in range(padding_width):
                 padded[:, i] = padded[:, padding_width]
                 padded[:, -i - 1] = padded[:, -padding_width - 1]
 
         if self.mode == "reflect":
-            padded[:padding_height, padding_width: padding_width + width] = (
-                self.image[1: padding_height + 1, :][::-1]
+            padded[:padding_height, padding_width : padding_width + width] = self.image[
+                1 : padding_height + 1, :
+            ][::-1]
+            padded[padding_height + height :, padding_width : padding_width + width] = (
+                self.image[-padding_height - 1 : -1, :][::-1]
             )
-            padded[
-                padding_height + height:, padding_width: padding_width + width
-            ] = self.image[-padding_height - 1: -1, :][::-1]
 
             for i in range(padding_width):
-                padded[:, padding_width - 1 - i] = (
-                    padded[:, padding_width + i + 1]
-                )
-                padded[:, padding_width - width + i] = (
-                    padded[:, padding_width + width - 2 - i]
-                )
+                padded[:, padding_width - 1 - i] = padded[:, padding_width + i + 1]
+                padded[:, padding_width - width + i] = padded[
+                    :, padding_width + width - 2 - i
+                ]
 
         return padded
 
@@ -77,9 +73,7 @@ class ImageConvolution:
 
         for i in range(height):
             for j in range(width):
-                region = padded_image[
-                    i: i + kernel_height, j: j + kernel_width
-                ]
+                region = padded_image[i : i + kernel_height, j : j + kernel_width]
                 output[i, j] = np.sum(region * self.kernel)
 
         if normal:

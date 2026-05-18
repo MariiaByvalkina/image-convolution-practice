@@ -6,9 +6,7 @@ if __name__ == "__main__":
 
     parser = argparse.ArgumentParser()
     parser.add_argument("input")
-    parser.add_argument(
-        "--mode", choices=["zero", "edge", "reflect"], default="zero"
-    )
+    parser.add_argument("--mode", choices=["zero", "edge", "reflect"], default="zero")
     parser.add_argument(
         "--kernel", choices=["sharpen", "blur", "sobel"], default="sharpen"
     )
