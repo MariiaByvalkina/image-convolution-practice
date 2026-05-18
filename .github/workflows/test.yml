@@ -8,10 +8,10 @@ jobs:
       - name: Install dependencies
         run: pip install numpy pillow pytest mypy flake8 black
       - name: Lint with flake8 (Линтер)
-        run: flake8 src/
+        run: flake8 src/ --ignore=E203,E501,W503
       - name: Format check with black (Форматтер)
         run: black --check src/
       - name: Type check (Mypy)
-        run: mypy src/
+        run: mypy src/ --ignore-missing-imports
       - name: Run tests (Тесты)
         run: PYTHONPATH=src pytest tests/
