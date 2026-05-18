@@ -1,6 +1,6 @@
 import argparse
-from kernels import get_kernel
-from convolution import ImageConvolution
+from .kernels import get_kernel
+from .convolution import ImageConvolution
 
 if __name__ == "__main__":
 

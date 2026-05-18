@@ -6,10 +6,10 @@ from typing import Optional
 class ImageConvolution:
 
     def __init__(self, kernel: np.ndarray, mode: str = "zero"):
-        self.kernel: np.ndarray = np.array(kernel)
+        self.kernel: np.ndarray = np.array(kernel, dtype=np.float64)
         self.image: Optional[np.ndarray] = None
         self.mode: str = mode
-        self.result: Optional[np.ndarray] = None
+        self.result_data: Optional[np.ndarray] = None
 
     def set_mode(self, mode: str) -> "ImageConvolution":
         self.mode = mode
@@ -21,6 +21,10 @@ class ImageConvolution:
         return self
 
     def padding(self) -> np.ndarray:
+
+        if self.image is None:
+            raise ValueError("Изображение не загружено")
+
         kernel_height, kernel_width = self.kernel.shape
         padding_height, padding_width = kernel_height // 2, kernel_width // 2
 
@@ -65,6 +69,13 @@ class ImageConvolution:
         return padded
 
     def convolve(self, normal: bool = True) -> "ImageConvolution":
+
+        if self.image is None:
+            raise ValueError("Изображение не загружено")
+
+        if self.kernel is None:
+            raise ValueError("Ядро не выбрано")
+
         padded_image = self.padding()
         kernel_height, kernel_width = self.kernel.shape
         height, width = self.image.shape
@@ -79,13 +90,17 @@ class ImageConvolution:
         if normal:
             output = np.clip(output, 0, 1)
 
-        self.result = output
+        self.result_data = output
         return self
 
     def save_result(self, path: str) -> "ImageConvolution":
-        result_image = Image.fromarray((self.result * 255).astype(np.uint8))
+
+        if self.result_data is None:
+            raise ValueError("Нет результата для сохранения")
+
+        result_image = Image.fromarray((self.result_data * 255).astype(np.uint8))
         result_image.save(path)
         return self
 
     def result(self):
-        return self.result
+        return self.result_data

@@ -32,7 +32,7 @@ def test_convolution_integrity(sample_image, k_name, mode):
     tool = ImageConvolution(kernel, mode)
     tool.image_to_BW(sample_image).convolve()
 
-    result = (tool.result * 255).astype(np.uint8)
+    result = (tool.result() * 255).astype(np.uint8)
 
     if not os.path.exists(golden_path):
         Image.fromarray(result).save(golden_path)
