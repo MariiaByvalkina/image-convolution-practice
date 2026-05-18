@@ -1,5 +1,6 @@
 import numpy as np
 
+
 def get_kernel(kernel: str) -> np.ndarray:
     kernels = {
         "sharpen": np.array([[0, -1, 0],
