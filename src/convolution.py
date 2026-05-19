@@ -21,58 +21,40 @@ class ImageConvolution:
         return self
 
     def padding(self) -> np.ndarray:
-
         if self.image is None:
             raise ValueError("Изображение не загружено")
 
         kernel_height, kernel_width = self.kernel.shape
         padding_height, padding_width = kernel_height // 2, kernel_width // 2
-
         height, width = self.image.shape
 
         padded = np.zeros((height + 2 * padding_height, width + 2 * padding_width))
-
-        padded[
-            padding_height : padding_height + height,
-            padding_width : padding_width + width,
-        ] = self.image
+        padded[padding_height:padding_height + height, padding_width:padding_width + width] = self.image
 
         if self.mode == "zero":
             pass
 
         if self.mode == "edge":
-            padded[:padding_height, padding_width : padding_width + width] = self.image[
-                0, :
-            ]
-            padded[: padding_height + height, padding_width : padding_width + width] = (
-                self.image[-1, :]
-            )
+            padded[:padding_height, padding_width:padding_width + width] = self.image[0, :]
+            padded[:padding_height + height, padding_width:padding_width + width] = self.image[-1, :]
 
             for i in range(padding_width):
                 padded[:, i] = padded[:, padding_width]
                 padded[:, -i - 1] = padded[:, -padding_width - 1]
 
         if self.mode == "reflect":
-            padded[:padding_height, padding_width : padding_width + width] = self.image[
-                1 : padding_height + 1, :
-            ][::-1]
-            padded[padding_height + height :, padding_width : padding_width + width] = (
-                self.image[-padding_height - 1 : -1, :][::-1]
-            )
+            padded[:padding_height, padding_width:padding_width + width] = self.image[1:padding_height + 1, :][::-1]
+            padded[padding_height + height:, padding_width:padding_width + width] = self.image[-padding_height - 1:-1, :][::-1]
 
             for i in range(padding_width):
                 padded[:, padding_width - 1 - i] = padded[:, padding_width + i + 1]
-                padded[:, padding_width - width + i] = padded[
-                    :, padding_width + width - 2 - i
-                ]
+                padded[:, padding_width - width + i] = padded[:, padding_width + width - 2 - i]
 
         return padded
 
     def convolve(self, normal: bool = True) -> "ImageConvolution":
-
         if self.image is None:
             raise ValueError("Изображение не загружено")
-
         if self.kernel is None:
             raise ValueError("Ядро не выбрано")
 
@@ -84,7 +66,7 @@ class ImageConvolution:
 
         for i in range(height):
             for j in range(width):
-                region = padded_image[i : i + kernel_height, j : j + kernel_width]
+                region = padded_image[i:i + kernel_height, j:j + kernel_width]
                 output[i, j] = np.sum(region * self.kernel)
 
         if normal:
@@ -94,7 +76,6 @@ class ImageConvolution:
         return self
 
     def save_result(self, path: str) -> "ImageConvolution":
-
         if self.result_data is None:
             raise ValueError("Нет результата для сохранения")
 
@@ -102,5 +83,5 @@ class ImageConvolution:
         result_image.save(path)
         return self
 
-    def result(self):
+    def result(self) -> Optional[np.ndarray]:
         return self.result_data
