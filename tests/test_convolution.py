@@ -16,11 +16,15 @@ kernels = ["sharpen", "blur", "sobel"]
 modes = ["zero", "edge", "reflect"]
 
 @pytest.fixture
-def sample_image(tmp_path):
-    path = tmp_path / "test.png"
-    data = np.linspace(0, 255, 10000).reshape(100, 100).astype(np.uint8)
-    Image.fromarray(data).save(path)
-    return str(path)
+def sample_image():
+    path = os.path.join(os.path.dirname(__file__), "../data/input.jpg")
+
+    if not os.path.exists(path):
+        raise FileNotFoundError(
+            f"Положи свою картинку по пути 'data/input.jpg', чтобы тесты могли её взять!"
+        )
+
+    return path
 
 @pytest.mark.parametrize("k_name", kernels)
 @pytest.mark.parametrize("mode", modes)
@@ -35,7 +39,7 @@ def test_convolution_integrity(sample_image, k_name, mode):
     result = (tool.result() * 255).astype(np.uint8)
 
     if not os.path.exists(golden_path):
-        Image.fromarray(result).save(golden_path)
+        Image.fromarray(result, mode="L").save(golden_path)
         pytest.skip(f"New golden created: {golden_path}")
 
     expected = np.array(Image.open(golden_path))
