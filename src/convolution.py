@@ -47,8 +47,8 @@ class ImageConvolution:
             padded[padding_height + height:, padding_width:padding_width + width] = self.image[-padding_height - 1:-1, :][::-1]
 
             for i in range(padding_width):
-                padded[:, padding_width - 1 - i] = padded[:, padding_width + i + 1]
-                padded[:, padding_width - width + i] = padded[:, padding_width + width - 2 - i]
+                padded[:, padding_width - 1 - i] = padded[:, padding_width + 1 + i]
+                padded[:, padding_width + width + i] = padded[:, padding_width + width - 2 - i]
 
         return padded
 
