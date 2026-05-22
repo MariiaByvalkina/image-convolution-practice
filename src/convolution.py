@@ -17,7 +17,7 @@ class ImageConvolution:
 
     def image_to_BW(self, image: str) -> "ImageConvolution":
         img = Image.open(image).convert("L")
-        self.image = np.array(img) / 255
+        self.image = np.array(img, dtype=np.float64) / 255.0
         return self
 
     def padding(self) -> np.ndarray:
@@ -36,7 +36,7 @@ class ImageConvolution:
 
         if self.mode == "edge":
             padded[:padding_height, padding_width:padding_width + width] = self.image[0, :]
-            padded[:padding_height + height, padding_width:padding_width + width] = self.image[-1, :]
+            padded[padding_height + height:, padding_width: padding_width + width] = self.image[-1, :]
 
             for i in range(padding_width):
                 padded[:, i] = padded[:, padding_width]
@@ -79,7 +79,8 @@ class ImageConvolution:
         if self.result_data is None:
             raise ValueError("Нет результата для сохранения")
 
-        result_image = Image.fromarray((self.result_data * 255).astype(np.uint8))
+        uint8_array = (self.result_data * 255).astype(np.uint8)
+        result_image = Image.fromarray(uint8_array, mode="L")
         result_image.save(path)
         return self
 
