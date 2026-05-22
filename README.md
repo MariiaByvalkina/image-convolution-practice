@@ -33,7 +33,7 @@ PYTHONPATH=src pytest tests/test_convolution.py -v
 
 ### 2. Проверка стиля кода и форматирования (Ruff)
 ```bash
-ruff check src/ --ignore=E501,E203
+ruff check src/ 
 ```
 
 ### 3. Статическая проверка типов (Mypy)
