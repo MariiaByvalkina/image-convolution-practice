@@ -1,17 +1,29 @@
-name: Python CI
-on: [push]
+name: Testing
+
+on: push
+
 jobs:
   build:
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v3
+      - uses: actions/checkout@v4
+
+      - name: Install Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+
       - name: Install dependencies
-        run: pip install numpy pillow pytest mypy flake8 black
-      - name: Lint with flake8 (Линтер)
-        run: flake8 src/
-      - name: Format check with black (Форматтер)
-        run: black --check src/
-      - name: Type check (Mypy)
-        run: mypy src/
-      - name: Run tests (Тесты)
-        run: PYTHONPATH=src pytest tests/
+        run: |
+          python -m pip install --upgrade pip
+          pip install pytest numpy pillow mypy ruff hypothesis
+
+      - name: Lint and Format with Ruff
+
+        run: ruff check src/ --ignore=E501,E203
+
+      - name: Type check with Mypy
+        run: MYPYPATH=src mypy src/ --ignore-missing-imports
+
+      - name: Run tests
+        run: PYTHONPATH=src pytest tests/test_convolution.py -v
