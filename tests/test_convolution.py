@@ -5,8 +5,8 @@ import base64
 import io
 from PIL import Image
 
-from src.convolution import ImageConvolution
-from src.kernels import get_kernel
+from convolution import ImageConvolution
+from kernels import get_kernel
 
 INPUT_IMAGE_PATH = os.path.join(os.path.dirname(__file__), "../data/input.jpg")
 GOLDEN_DIR = os.path.join(os.path.dirname(__file__), "goldens")
