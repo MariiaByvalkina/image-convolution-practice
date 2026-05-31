@@ -1,8 +1,6 @@
 import pytest
 import numpy as np
 import os
-import base64
-import io
 from PIL import Image
 
 from convolution import ImageConvolution
@@ -30,7 +28,7 @@ def sample_image():
 @pytest.mark.parametrize("kernel_name", kernels)
 @pytest.mark.parametrize("mode", modes)
 
-def test_convolution_integrity(sample_image, kernel_name, mode, golden):
+def test_convolution_integrity(sample_image, kernel_name, mode):
     golden_path = os.path.join(GOLDEN_DIR, f"{kernel_name}_{mode}.png")
 
     kernel = get_kernel(kernel_name)
