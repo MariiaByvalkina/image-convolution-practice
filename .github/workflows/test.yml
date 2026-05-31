@@ -13,17 +13,20 @@ jobs:
         with:
           python-version: "3.11"
 
+      - name: Setup uv
+        uses: astral-sh/setup-uv@v5
+        with:
+          version: "latest"
+
       - name: Install dependencies
         run: |
-          python -m pip install --upgrade pip
-          pip install pytest numpy pillow mypy ruff hypothesis
+          uv pip install --system pytest numpy pillow mypy ruff hypothesis
 
       - name: Lint and Format with Ruff
-
-        run: ruff check src/ --ignore=E501,E203
+        run: uv run ruff check src/ --ignore=E501,E203
 
       - name: Type check with Mypy
-        run: MYPYPATH=src mypy src/ --ignore-missing-imports
+        run: MYPYPATH=src uv run mypy src/ --ignore-missing-imports
 
       - name: Run tests
-        run: PYTHONPATH=src pytest tests/test_convolution.py -v
+        run: PYTHONPATH=src uv run pytest tests/test_convolution.py -v
