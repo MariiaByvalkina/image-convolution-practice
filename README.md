@@ -1,5 +1,5 @@
 # image-convolution-practice
-Репозиторий для выполнения учебной практики по теме свертка изображений.
+Репозиторий для выполнения учебной практики по теме "Свёртка изображений".
 
 ## Структура проекта
 * `src/kernels.py` — библиотека матриц ядер свертки.
@@ -28,7 +28,7 @@ python3 -m src.main data/input.jpg --kernel sharpen --mode reflect --out data/re
 Тесты автоматически проверяют все комбинации ядер и режимов паддинга.
 
 ```bash
-PYTHONPATH=src pytest tests/test_convolution.py -v
+PYTHONPATH=. pytest tests/test_convolution.py
 ```
 
 ### 2. Проверка стиля кода и форматирования (Ruff)
