@@ -64,7 +64,6 @@ dependencies = [
     { name = "numpy" },
     { name = "pillow" },
     { name = "pytest" },
-    { name = "pytest-golden" },
 ]
 
 [package.metadata]
@@ -73,7 +72,6 @@ requires-dist = [
     { name = "numpy", specifier = ">=2.4.6" },
     { name = "pillow", specifier = ">=12.2.0" },
     { name = "pytest", specifier = ">=9.0.3" },
-    { name = "pytest-golden", specifier = "==1.0.1" },
 ]
 
 [[package]]
@@ -270,38 +268,6 @@ dependencies = [
 sdist = { url = "https://files.pythonhosted.org/packages/7d/0d/549bd94f1a0a402dc8cf64563a117c0f3765662e2e668477624baeec44d5/pytest-9.0.3.tar.gz", hash = "sha256:b86ada508af81d19edeb213c681b1d48246c1a91d304c6c81a427674c17eb91c", size = 1572165, upload-time = "2026-04-07T17:16:18.027Z" }
 wheels = [
     { url = "https://files.pythonhosted.org/packages/d4/24/a372aaf5c9b7208e7112038812994107bc65a84cd00e0354a88c2c77a617/pytest-9.0.3-py3-none-any.whl", hash = "sha256:2c5efc453d45394fdd706ade797c0a81091eccd1d6e4bccfcd476e2b8e0ab5d9", size = 375249, upload-time = "2026-04-07T17:16:16.13Z" },
-]
-
-[[package]]
-name = "pytest-golden"
-version = "1.0.1"
-source = { registry = "https://pypi.org/simple" }
-dependencies = [
-    { name = "pytest" },
-    { name = "ruamel-yaml" },
-    { name = "testfixtures" },
-]
-sdist = { url = "https://files.pythonhosted.org/packages/44/80/4d405adb81e16c841708652834da6ac6cc7c0a47b21bbc998d896cb9e471/pytest_golden-1.0.1.tar.gz", hash = "sha256:968d01ab05d330fa10b310545fe8fd9aeb75d3a5b9a513fdbe91b89230b68938", size = 12540, upload-time = "2026-01-06T18:10:32.702Z" }
-wheels = [
-    { url = "https://files.pythonhosted.org/packages/56/5a/ea5c72803aa580c647298f079edf36fdfa2c154e9ed95c1b2a8ee00c38b8/pytest_golden-1.0.1-py3-none-any.whl", hash = "sha256:189abdbf61bad53423db5a9005390c1f96cc1aa404e39f2cbeea8a229a17b99b", size = 10983, upload-time = "2026-01-06T18:10:31.168Z" },
-]
-
-[[package]]
-name = "ruamel-yaml"
-version = "0.19.1"
-source = { registry = "https://pypi.org/simple" }
-sdist = { url = "https://files.pythonhosted.org/packages/c7/3b/ebda527b56beb90cb7652cb1c7e4f91f48649fbcd8d2eb2fb6e77cd3329b/ruamel_yaml-0.19.1.tar.gz", hash = "sha256:53eb66cd27849eff968ebf8f0bf61f46cdac2da1d1f3576dd4ccee9b25c31993", size = 142709, upload-time = "2026-01-02T16:50:31.84Z" }
-wheels = [
-    { url = "https://files.pythonhosted.org/packages/b8/0c/51f6841f1d84f404f92463fc2b1ba0da357ca1e3db6b7fbda26956c3b82a/ruamel_yaml-0.19.1-py3-none-any.whl", hash = "sha256:27592957fedf6e0b62f281e96effd28043345e0e66001f97683aa9a40c667c93", size = 118102, upload-time = "2026-01-02T16:50:29.201Z" },
-]
-
-[[package]]
-name = "testfixtures"
-version = "6.18.5"
-source = { registry = "https://pypi.org/simple" }
-sdist = { url = "https://files.pythonhosted.org/packages/b1/87/d2e5ba12f5a429327f415ddb38ec4bd712ac8ea1c4047fe21b7729fbfbe3/testfixtures-6.18.5.tar.gz", hash = "sha256:02dae883f567f5b70fd3ad3c9eefb95912e78ac90be6c7444b5e2f46bf572c84", size = 124944, upload-time = "2022-03-01T10:48:29.808Z" }
-wheels = [
-    { url = "https://files.pythonhosted.org/packages/51/4a/0a7ecce32e82affce0ce7381955fa379779007033cd72e9bf3e50a0d31e8/testfixtures-6.18.5-py2.py3-none-any.whl", hash = "sha256:7de200e24f50a4a5d6da7019fb1197aaf5abd475efb2ec2422fdcf2f2eb98c1d", size = 95543, upload-time = "2022-03-01T10:48:28.197Z" },
 ]
 
 [[package]]
