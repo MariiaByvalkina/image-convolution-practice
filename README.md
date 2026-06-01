@@ -33,12 +33,12 @@ uv run pytest -v
 
 ### 2. Проверка стиля кода и форматирования (Ruff)
 ```bash
-uv run ruff check src/ 
+uv run ruff check .
 ```
 
 ### 3. Статическая проверка типов (Mypy)
 ```bash
-uv run mypy src/ --ignore-missing-imports
+uv run mypy .
 ```
 ## Источники
 * Исходное демонстрационное изображение (`data/input.jpg`): [https://unsplash.com/photos/snow-covered-mountain-under-blue-sky-during-daytime-wH8S1RmtU9Q]
