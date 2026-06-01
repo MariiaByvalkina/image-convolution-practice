@@ -28,17 +28,17 @@ python3 -m src.main data/input.jpg --kernel sharpen --mode reflect --out data/re
 Тесты автоматически проверяют все комбинации ядер и режимов паддинга.
 
 ```bash
-PYTHONPATH=src pytest tests/test_convolution.py -v
+uv run pytest -v
 ```
 
 ### 2. Проверка стиля кода и форматирования (Ruff)
 ```bash
-ruff check src/ 
+uv run ruff check src/ 
 ```
 
 ### 3. Статическая проверка типов (Mypy)
 ```bash
-MYPYPATH=src mypy src/ --ignore-missing-imports
+uv run mypy src/ --ignore-missing-imports
 ```
 ## Источники
 * Исходное демонстрационное изображение (`data/input.jpg`): [https://unsplash.com/photos/snow-covered-mountain-under-blue-sky-during-daytime-wH8S1RmtU9Q]
