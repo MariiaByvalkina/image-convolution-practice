@@ -1,5 +1,5 @@
 import numpy as np
-from typing import Optional
+from PIL import Image
 
 
 class ImageConvolution:
@@ -7,7 +7,6 @@ class ImageConvolution:
     def __init__(self, kernel: np.ndarray, mode: str = "edge"):
         self.kernel: np.ndarray = np.array(kernel, dtype=np.float64)
         self.mode: str = mode
-        self._result_data: Optional[np.ndarray] = None
 
     def set_mode(self, mode: str) -> "ImageConvolution":
         self.mode = mode
@@ -45,16 +44,18 @@ class ImageConvolution:
             raise ValueError(f"Неизвестный режим паддинга: '{self.mode}'.")
         return padded
 
-    def convolve(self, image: np.ndarray, normal: bool = True) -> np.ndarray:
+    def convolve(self, image: Image.Image, normal: bool = True) -> np.ndarray:
         if image is None:
             raise ValueError("Изображение не загружено")
         if self.kernel is None:
             raise ValueError("Ядро не выбрано")
 
-        image = np.array(image, dtype=np.float64)
-        padded_image = self._padding(image)
+        image_array = np.array(image.convert('L'), dtype=np.float64) / 255.0
+
+        padded_image = self._padding(image_array)
+
         kernel_height, kernel_width = self.kernel.shape
-        height, width = image.shape
+        height, width = image_array.shape
 
         output = np.zeros((height, width))
         for i in range(height):
@@ -65,10 +66,4 @@ class ImageConvolution:
         if normal:
             output = np.clip(output, 0, 1)
 
-        self._result_data = output
-        return output
-
-    def get_result(self) -> Optional[np.ndarray]:
-        if self._result_data is None:
-            return None
-        return (self._result_data * 255).astype(np.uint8)
+        return (output * 255).astype(np.uint8)
