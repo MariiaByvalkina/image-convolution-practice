@@ -1,0 +1,27 @@
+[project]
+name = "image-convolution-practice"
+version = "0.1.0"
+readme = "README.md"
+requires-python = ">=3.14"
+dependencies = [
+    "numpy>=2.4.6",
+    "pillow>=12.2.0",
+]
+
+[project.optional-dependencies]
+dev = [
+    "pytest>=9.0.3",
+    "mypy>=2.1.0",
+    "ruff>=0.6.0",
+]
+
+[tool.setuptools]
+package-dir = {"" = "src"}
+
+[tool.setuptools.packages.find]
+where = ["src"]
+
+[tool.mypy]
+python_version = "3.14"
+mypy_path = "src"
+explicit_package_bases = true
