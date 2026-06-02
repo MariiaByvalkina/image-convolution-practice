@@ -6,6 +6,7 @@ requires-python = ">=3.14"
 dependencies = [
     "numpy>=2.4.6",
     "pillow>=12.2.0",
+    "opencv-python>=4.10.0.0",
 ]
 
 [project.optional-dependencies]
@@ -25,3 +26,9 @@ where = ["src"]
 python_version = "3.14"
 mypy_path = "src"
 explicit_package_bases = true
+
+[dependency-groups]
+dev = [
+    "pytest-benchmark>=5.2.3",
+    "matplotlib>=3.9.0"
+]
