@@ -32,6 +32,3 @@ jobs:
 
       - name: Run tests
         run: uv run pytest -v
-
-      - name: Run benchmarks
-        run: uv run pytest tests/test_benchmark.py -v
