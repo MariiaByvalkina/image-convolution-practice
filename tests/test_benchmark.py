@@ -9,6 +9,15 @@ from kernels import get_kernel
 IMAGE_SIZES = [512, 1024]
 KERNELS = ["blur", "sharpen", "sobel"]
 
+SOBEL_PILLOW_KERNEL = ImageFilter.Kernel(
+    size=(3, 3),
+    kernel=[-1, 0, 1,
+            -2, 0, 2,
+            -1, 0, 1],
+    scale=1,
+    offset=0
+)
+
 @pytest.fixture(params=IMAGE_SIZES)
 def gray_pil_image(request):
     size = request.param
@@ -84,6 +93,12 @@ def test_pillow_rgb_sharpen(benchmark, rgb_pil_image):
 
 def test_pillow_rgb_blur(benchmark, rgb_pil_image):
     benchmark(rgb_pil_image.filter, ImageFilter.BLUR)
+
+def test_pillow_grayscale_sobel(benchmark, gray_pil_image):
+    benchmark(gray_pil_image.filter, SOBEL_PILLOW_KERNEL)
+
+def test_pillow_rgb_sobel(benchmark, rgb_pil_image):
+    benchmark(rgb_pil_image.filter, SOBEL_PILLOW_KERNEL)
 
 
 #----OpenCV----
