@@ -44,26 +44,51 @@ class ImageConvolution:
             raise ValueError(f"Неизвестный режим паддинга: '{self.mode}'.")
         return padded
 
-    def convolve(self, image: Image.Image, normal: bool = True) -> np.ndarray:
-        if image is None:
-            raise ValueError("Изображение не загружено")
-        if self.kernel is None:
-            raise ValueError("Ядро не выбрано")
-
-        image_array = np.array(image.convert('L'), dtype=np.float64) / 255.0
-
+    def _convolve_2d(
+        self,
+        image_array: np.ndarray,
+        normal: bool = True,
+    ) -> np.ndarray:
         padded_image = self._padding(image_array)
 
         kernel_height, kernel_width = self.kernel.shape
         height, width = image_array.shape
 
-        output = np.zeros((height, width))
+        output = np.zeros((height, width), dtype=np.float64)
+
         for i in range(height):
             for j in range(width):
-                region = padded_image[i:i + kernel_height, j:j + kernel_width]
+                region = padded_image[
+                    i:i + kernel_height,
+                    j:j + kernel_width
+                ]
+
                 output[i, j] = np.sum(region * self.kernel)
 
         if normal:
             output = np.clip(output, 0, 1)
 
         return (output * 255).astype(np.uint8)
+
+    def convolve(self, image: Image.Image, normal: bool = True) -> np.ndarray:
+        if image is None:
+            raise ValueError("Изображение не загружено")
+        if self.kernel is None:
+            raise ValueError("Ядро не выбрано")
+
+        image_array = np.array(image, dtype=np.float64) / 255.0
+
+        if image_array.ndim == 2:
+            return self._convolve_2d(image_array, normal)
+
+        if image_array.ndim == 3:
+            channels = []
+
+            for channel in range(image_array.shape[2]):
+                channel_result = self._convolve_2d(image_array[:, :, channel],normal)
+
+                channels.append(channel_result)
+
+            return np.stack(channels, axis=2)
+
+        raise ValueError("Неподдерживаемый формат")
